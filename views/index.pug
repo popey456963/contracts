@@ -1,0 +1,33 @@
+html
+  head
+    title Contracts
+    meta(charset='UTF-8')
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
+  body
+    h1 Contracts
+
+    img.preload(src='/img/cards.png')
+
+    #card-table
+      button#start_button Start Game
+      p#state Waiting for players...
+
+    input#username
+    button#update_username Set Username
+
+    div#expected_hands_div.hidden
+      input#expected_hands
+      button#update_expected_hands Bet
+
+    //- Name, Bet, Hands Won, Points
+    #player_entries
+
+    br
+    div #[b Current Round: ] #[span#round 0]
+    div #[b Current Trump: ] #[span#trump N/A]
+
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/javascript/util.js')
+    script(src='/javascript/cards.js')
+    script(src='/javascript/main.js')
