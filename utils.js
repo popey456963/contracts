@@ -6,4 +6,4 @@ module.exports.wrapAdd = (a, b, max) => {
     return sum % max
 }
 
-module.exports.DEBUG = true
+module.exports.DEBUG = false

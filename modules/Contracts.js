@@ -210,7 +210,7 @@ class Contracts {
                 this.update_players()
                 await pause(100)
 
-                if (this.trumps.index === 4 || true) {
+                if (this.trumps.index === 4) {
                     // this is the final game!
                     let max_score = -1
                     let max_sockets = [undefined]
