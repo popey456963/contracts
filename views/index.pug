@@ -27,6 +27,14 @@ html
     div #[b Current Round: ] #[span#round 0]
     div #[b Current Trump: ] #[span#trump N/A]
 
+    br
+    h2 How do I play?
+    p #[b Contracts] is a bidding and trick-taking card game for three to five players, played over five hands.  Each hand consists of two parts: the #[i bidding phase], where each player bids how many hands they think they can win; and the #[i play phase], where the players try to win that number of hands.
+    p Each player is dealt cards depending on the number of players (18, 13 and 10 cards for 3, 4 and 5 players respectively).  In a three player game the two of clubs is removed.  In a five player game both the two of clubs and two of spades are removed.  In order, each player estimates the number of tricks they are going to win.  The number of tricks cannot add up to the number of cards a player has.
+    p Once all players have bet, the playing phase begins with the individual who began betting.  In a trick-taking game, each player plays a card to a central hand and the winner takes the trick.  If possible, players must follow suit by playing a card of the same suit from their hand. If no such card is available, then another card may be discarded, but it cannot contribute to the trick unless it's a trump (see below). The player who contributed the highest ranking card wins the trick for their team and gets to start the next trick. 
+    p Trumps occur on rounds 1 - 4, going in order of the suits (clubs, diamonds, hearts, spades).  Players must still follow suit if they can, but if they've run out of the chosen suit they may play a card from the trump suit instead.  A trump beats cards from all other suits.  If two or more trumps are played in the same hand, then the highest trump wins the trick.
+    p Points are scored based on the number of hands bet.  If a player obtains the number of hands they wanted, they get #[i 6 * hands_bet] points, otherwise they get #[i hands_bet] points.  If a player bet zero hands, they win #[i 10] points and none of their cards count as trumps.
+
     script(src='https://code.jquery.com/jquery-1.11.1.js')
     script(src='/socket.io/socket.io.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js')
@@ -35,3 +43,8 @@ html
     script(src='/javascript/util.js')
     script(src='/javascript/cards.js')
     script(src='/javascript/main.js')
+
+    if DEBUG
+      script.
+        window.onbeforeunload = undefined
+        localStorage.setItem('username', Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))

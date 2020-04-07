@@ -122,6 +122,21 @@ $(function() {
         $('#trump').text(trump || 'None')
     })
 
+    socket.on('game_won', ({ winners }) => {
+        console.log('the game has been won')
+
+        winners = winners.map(winner => state.players.find(sock => sock.id === winner))
+        const names = winners.map(soc => soc.username || soc.id)
+
+        if (winners.length === 1) {
+            setState(`${names[0]} has won the game with ${winners[0].points} points!`)
+        } else {
+            setState(`${names.join(' and ')} have won the game with ${winners[0].points} points each!`)
+        }
+
+        $(`.card`).remove()
+    })
+
     socket.on('all_players', players => {
         state.players = players
 
@@ -132,12 +147,14 @@ $(function() {
                     <th>Bet</th>
                     <th>Hands Won</th>
                     <th>Points</th>
+                    <th>Lead</th>
                 </tr>
                 ${players.map(player => {
                     const name = player.username || player.id
                     const bet = player.bet || 'none'
                     const hands_won = player.hands_won || 0
                     const points = player.points || 0
+                    const lead = player.leading ? '✓' : ''
 
                     return `
                         <tr>
@@ -145,6 +162,7 @@ $(function() {
                             <td>${escapeHtml(String(bet))}</td>
                             <td>${escapeHtml(String(hands_won))}</td>
                             <td>${escapeHtml(String(points))}</td>
+                            <td>${escapeHtml(String(lead))}</td>
                         </tr>
                     `
                 }).join('\n')}
@@ -203,7 +221,7 @@ $(function() {
             if (isHidden()) beep()
             toastr.info(`It's your turn to play!`)
             state.usToPlay = true
-
+            renderHand(state.hand, state.playedCards, state.lastPlayedCards, onCardClick, true)
         } else {
             setState(`${player.username || player.id} is playing...`)
         }

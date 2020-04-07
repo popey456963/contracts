@@ -6,13 +6,15 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 
+const DEBUG = require('./utils')
+
 global.games = {}
 
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 
 app.get('/game/:game', function (req, res) {
-    res.render('index', { title: 'Hey', message: 'Hello there!' })
+    res.render('index', { DEBUG })
 })
 
 io.on('connection', socket => {
