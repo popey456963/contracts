@@ -192,7 +192,11 @@ $(function() {
         console.log('hand', hand)
     })
 
-    socket.on('betting_start', () => {
+    socket.on('betting_start', (res) => {
+        if (res && res.err) {
+            toastr.error(res.err)
+        }
+
         $('#expected_hands_div').removeClass('hidden')
         log(`Betting has started for you!`)
     })

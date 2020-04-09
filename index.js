@@ -14,7 +14,8 @@ app.set('view engine', 'pug')
 app.use(express.static('public'))
 
 app.get('/game/:game', function (req, res) {
-    res.render('index', { DEBUG })
+    const url = req.protocol + '://' + req.get('host') + req.originalUrl
+    res.render('game', { DEBUG, url })
 })
 
 io.on('connection', socket => {

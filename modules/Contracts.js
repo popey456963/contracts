@@ -264,10 +264,24 @@ class Contracts {
 
     set_bet(socket, bet) {
         const socketIndex = this.getSocketIndex(socket.id)
+        const nextPlayer = wrapAdd(socketIndex, 1, this.game.sockets.length)
+
+        // some validation
+        bet = Number(bet)
+
+        if (isNaN(bet)) return socket.emit('betting_start', { err: 'Invalid bet.' })
+        if (bet < 0) return socket.emit('betting_start', { err: `Bet too low.` })
+        if (bet > this.hands[0].cards.length) return socket.emit('betting_start', { err: `Bet too high.` })
+
         socket.bet = bet
+
+        if (nextPlayer === this.originalStartingPlayer) {
+            const sum = this.game.sockets.map(map_socket => map_socket.bet).reduce((total, num) => total + num, 0)
+            if (sum === this.hands[0].cards.length) return socket.emit('betting_start', { err: `Last bet can't equal sum.` })
+        }
+
         socket.isBetting = false
 
-        const nextPlayer = wrapAdd(socketIndex, 1, this.game.sockets.length)
         if (nextPlayer === this.originalStartingPlayer) {
             // all bets done!
             console.log('all bets done')
