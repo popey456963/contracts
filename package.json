@@ -13,7 +13,7 @@
     "express": "^4.17.1",
     "lodash": "^4.17.19",
     "pug": "^2.0.4",
-    "socket.io": "^2.4.0"
+    "socket.io": "^2.5.0"
   },
   "devDependencies": {}
 }
